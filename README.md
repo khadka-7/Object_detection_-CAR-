@@ -34,31 +34,26 @@ Integration with TensorFlow Object Detection API
 The TensorFlow Object Detection API provides utilities to use the pre-trained SSD ResNet 50 v1 FPN model. 
 
 Here is a brief guide on how to integrate this model:
-**Import Required Libraries:
-**Ensure that the necessary modules from the TensorFlow Object Detection API are imported.
+**Import Required Libraries:**
 
-python
+Ensure that the necessary modules from the TensorFlow Object Detection API are imported.
 
-_from object_detection.builders import model_builder
-from object_detection.utils import config_util
+  from object_detection.builders import model_builder
+  from object_detection.utils import config_util
+
 Load the Pipeline Configuration:
-Load the configuration file specific to the SSD ResNet 50 v1 FPN model. This file defines the model architecture and other training parameters._
+Load the configuration file specific to the SSD ResNet 50 v1 FPN model. This file defines the model architecture and other training parameters.__
 
-python
-
-_configs = config_util.get_configs_from_pipeline_file('models/research/object_detection/configs/tf2/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.config')
-model_config = configs['model']_
+  _configs = config_util.get_configs_from_pipeline_file('models/research/object_detection/configs/tf2/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.config')
+  model_config = configs['model']__
 
 Build the Detection Model:
 Use the configuration to build the detection model.
 
-python
-_detection_model = model_builder.build(model_config=model_config, is_training=False)_
+  _detection_model = model_builder.build(model_config=model_config, is_training=False)_
 
 Restore the Checkpoint:
 Restore the model weights from the checkpoint.
 
-python
-_ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
-ckpt.restore('models/research/object_detection/test_data/checkpoint/ckpt-0').expect_partial()
-_
+  __ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
+  ckpt.restore('models/research/object_detection/test_data/checkpoint/ckpt-0').expect_partial()_
